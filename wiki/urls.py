@@ -19,5 +19,6 @@ from encyclopedia import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("wiki/<str:page>", views.page, name="page")
+    path("wiki/<str:page>", views.page, name="page"),
+    path("", views.index, name="index")
 ]
