@@ -1,0 +1,16 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    Results
+{% endblock %}
+
+{% block body %}
+    <h1>All Pages containing {{filter_phrase}}</h1>
+
+    <ul>
+        {% for listing in filtered_pages %}
+        <li><a href="wiki/{{ listing }}">{{ listing }}</a></li>
+        {% endfor %}
+    </ul>
+
+{% endblock %}
