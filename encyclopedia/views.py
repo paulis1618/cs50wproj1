@@ -44,6 +44,9 @@ def search(request):
                 kefalaia = i.upper()
                 if entry_search2 in kefalaia:
                     pages_filt.append(i)
+                if len(pages_filt) == 0 :
+                    pages_filt
+                    
             return render(request, "encyclopedia/filtpages.html", {
                 "filtered_pages" : pages_filt, 
                 "filter_phrase" : entry_search
@@ -58,5 +61,14 @@ def random(request):
         "tit" :  rand_page ,
         "name" : md_to_html(rand_page)
     })
-                
+
+
+def newpage(request):
+    return render (request, "encyclopedia/newpage.html"
+    )
+
+def createnew(request):
+    return render (request, "encyclopedia/newpage.html"
+    )
+    
             
