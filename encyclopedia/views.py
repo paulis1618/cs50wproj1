@@ -45,7 +45,9 @@ def search(request):
                 if entry_search2 in kefalaia:
                     pages_filt.append(i)
                 if len(pages_filt) == 0 :
-                    pages_filt
+                    return render(request, "encyclopedia/errorexist.html",{
+                        "error_message" : "Your requested page was not found."
+                    } )
                     
             return render(request, "encyclopedia/filtpages.html", {
                 "filtered_pages" : pages_filt, 
@@ -64,11 +66,47 @@ def random(request):
 
 
 def newpage(request):
-    return render (request, "encyclopedia/newpage.html"
-    )
+    if request.method == "GET":
+        return render (request, "encyclopedia/newpage.html"
+        )
+    elif request.method == "POST":
+        title = request.POST['title']
+        content = request.POST['content']
+        listings = util.list_entries()
+        for listing in listings:
+            listing = listing.upper()
+        titleup = title.upper()
+        if titleup not in listings:
+            util.save_entry(title, content)
+            return render (request, "encyclopedia/page.html", {
+                "tit" : title,
+                "name" :markdown2.markdown(content)
+            })
+        else:
+            return render (request, "encyclopedia/errorexist.html", {
+                "error_message" : "Your requested page allready exists."
+            })
 
-def createnew(request):
-    return render (request, "encyclopedia/newpage.html"
-    )
+
+def editpage(request):
+    if request.method == "POST":
+        title  = request.POST['title']
+        content = request.POST['content']
+        
+        return render(request, "encyclopedia/edit.html", {
+            "title" : title,
+            "content" : util.get_entry(title)
+        })
     
-            
+
+
+def savepage(request):
+    
+    if request.method == "POST":
+        title = request.POST['title']
+        content = request.POST['content']
+        util.save_entry(title, content)
+        return render (request, "encyclopedia/page.html", {
+            "tit" : title,
+            "name" : markdown2.markdown(content)
+        })

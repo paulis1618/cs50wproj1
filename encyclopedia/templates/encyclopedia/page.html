@@ -6,5 +6,12 @@
 
 {% block body %}
     {{name|safe}}
-
+    <br>
+    <br/>
+    <form method="POST" action = "{% url 'editpage'%}">
+        {% csrf_token %}
+        <input type="hidden" value = {{tit}} name="title">
+        <input type="hidden" value = {{name}} name="content">
+        <input type="submit" class="btn btn-primary" name="Edit" value="Edit">
+    </form>
 {% endblock %}
